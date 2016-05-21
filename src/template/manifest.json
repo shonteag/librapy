@@ -1,0 +1,4 @@
+{
+	"files": {},
+	"unittest": "nosetests"
+}
