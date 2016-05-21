@@ -193,3 +193,17 @@ def get_compiled_dir(project_path=None):
 	project_path = _parse_project_path(project_path)
 	manifest = _get_manifest(project_path)
 	return manifest["compiled_dir"]
+
+def set_key(key, value, project_path=None):
+	"""
+	Set a key in the manifest dict.
+	"""
+
+	project_path = _parse_project_path(project_path)
+	manifest = _get_manifest(project_path)
+
+	if key not in manifest:
+		raise KeyError("key '{0}' not found in manifest".format(key))
+
+	manifest[key] = value
+	_write_manifest(manifest, project_path)

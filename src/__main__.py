@@ -60,6 +60,15 @@ def list_wrapper(args):
 	except Exception, e:
 		print repr(e)
 
+def set_wrapper(args):
+	"""set key,value in manifest wrapper"""
+	try:
+		manifest.set_key(args.key, args.value, args.project_path)
+	except Exception, e:
+		print repr(e)
+	else:
+		print "'{0}' (key) set to '{1}' (value) in manifest".format(args.key, args.value)
+
 def get_args():
 
 	parser = argparse.ArgumentParser()
@@ -94,6 +103,13 @@ def get_args():
 	lis_opts = subparsers.add_parser("list")
 	lis_opts.add_argument("-p", "--project_path", default=os.getcwd())
 	lis_opts.set_defaults(func=list_wrapper)
+
+	# manifest: set
+	set_opts = subparsers.add_parser("set")
+	set_opts.add_argument("-p", "--project_path", default=os.getcwd())
+	set_opts.add_argument("key")
+	set_opts.add_argument("value")
+	set_opts.set_defaults(func=set_wrapper)
 
 	return parser.parse_args()
 

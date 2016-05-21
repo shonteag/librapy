@@ -3,9 +3,9 @@ compile.py
 
 A module dedicated to the compiling of
 librapy projects.
-.py -> .c -> .o -> .so
-|---------||---------|
-  Cython       gcc
+.py -> .c -> .so
+|---------||---|
+  Cython    gcc
 """
 
 import os
