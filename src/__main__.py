@@ -7,27 +7,58 @@ import manifest
 
 def init_wrapper(args):
 	"""init projct wrapper"""
-	manifest.init(project_path=args.project_path,
-				  build_dir=args.build_dir,
-				  compiled_dir=args.compiled_dir)
+	try:
+		man = manifest._get_manifest(args.project_path)
+	except IOError:
+		pass
+	else:
+		ans = raw_input("librapy.json already exists. Re-init? [Y/n] ")
+		if ans != "Y":
+			sys.exit()
+
+	try:
+		manifest.init(project_path=args.project_path,
+					  build_dir=args.build_dir,
+					  compiled_dir=args.compiled_dir)
+	except IOError, e:
+		print repr(e)
+	else:
+		print "librapy project init at {0}".format(args.project_path)
 
 def add_wrapper(args):
 	"""add file to project wrapper"""
-	manifest.add_file(args.file_path, args.project_path)
+	try:
+		manifest.add_file(args.file_path, args.project_path)
+	except Exception, e:
+		print repr(e)
+	else:
+		print "added 1 file to manifest {0}".format(args.project_path)
 
 def remove_wrapper(args):
 	"""remove file from project wrapper"""
-	manifest.remove_file(args.file_path, args.project_path)
+	try:
+		manifest.remove_file(args.file_path, args.project_path)
+	except Exception, e:
+		print repr(e)
+	else:
+		print "removed 1 file from {0}".format(args.project_path)
 
 def destroy_wrapper(args):
 	"""destroy project wrapper"""
-	manifest.destroy(args.project_path)
+	try:
+		manifest.destroy(args.project_path)
+	except Exception, e:
+		print repr(e)
+	else:
+		print "librapy project destroyed at {0}".format(args.project_path)
 
 def list_wrapper(args):
 	"""list files in manifest wrapper"""
-	for f, c in manifest.get_files(args.project_path).iteritems():
-		print f, ":", c
-
+	try:
+		for f, c in manifest.get_files(args.project_path).iteritems():
+			print f, ":", c
+	except Exception, e:
+		print repr(e)
 
 def get_args():
 
