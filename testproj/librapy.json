@@ -1,4 +1,6 @@
 {
+    "build_dir": "build", 
+    "compiled_dir": "compiled", 
     "files": {
         "hello_world.py": "a9b15e1b1df5564307f6e32683eeffc4"
     }, 
