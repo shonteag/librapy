@@ -11,12 +11,12 @@ import json
 import hashlib
 
 
-MANIFEST_FILE_NAME = "librapy.json"
+MANIFEST_FILE_NAME = "py2so.json"
 
 
 def _make_lib_path(path):
 	"""
-	Path within the librapy module itself.
+	Path within the py2so module itself.
 	"""
 	base = os.path.dirname(os.path.abspath(__file__))
 	return os.path.join(base, path)
@@ -66,7 +66,7 @@ def _write_manifest(manifest, project_path):
 def _get_blank_manifest():
 	"""
 	Get a fresh manifest dict from the template
-	in the librapy package.
+	in the py2so package.
 	"""
 	return json.load(open(
 		_make_lib_path(os.path.join("template", "manifest.json"))))
@@ -74,7 +74,7 @@ def _get_blank_manifest():
 def _add_file(manifest, path, project_path):
 	"""
 	add a file and it's initial md5 sum
-	to the librapy.json manifest file
+	to the py2so.json manifest file
 	"""
 	if path in manifest["files"]:
 		raise KeyError("file {0} already in manifest".format(path))
@@ -117,13 +117,14 @@ def _remove_file(manifest, path, project_path):
 		raise KeyError("file {0} not in manifest".format(path))
 	return manifest
 
-def _get_files(manifest, project_path):
+def _get_files(manifest, project_path, full_path=False):
 	"""
 	return a dict of the filepaths, with md5 values
 	"""
 	files = {}
 	for filepath, checksum in manifest["files"].iteritems():
-		filepath = _make_project_path(filepath, project_path)
+		if full_path:
+			filepath = _make_project_path(filepath, project_path)
 		files[filepath] = checksum
 	return files
 
@@ -196,11 +197,13 @@ def update_file(path, project_path=None):
 
 	project_path = _parse_project_path(project_path)
 	manifest = _get_manifest(project_path)
+
+	path = _make_key_path(path, project_path)
 	manifest = _update_file(manifest, path, project_path)
 	_write_manifest(manifest, project_path)
 
 
-def get_files(project_path=None):
+def get_files(project_path=None, full_path=False):
 	"""
 	Cmd entry to retrieve dict of files and
 	checksums in manifest.
@@ -208,7 +211,7 @@ def get_files(project_path=None):
 
 	project_path = _parse_project_path(project_path)
 	manifest = _get_manifest(project_path)
-	return _get_files(manifest, project_path)
+	return _get_files(manifest, project_path, full_path=full_path)
 
 
 def get_build_dir(project_path=None, full_path=False):

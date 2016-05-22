@@ -1,6 +1,4 @@
 {
 	"files": {},
-	"unittest": "nosetests",
-	"build_dir": "build",
-	"compiled_dir": "compiled"
+	"unittest": "nosetests"
 }

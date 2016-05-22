@@ -1,12 +1,15 @@
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 
 setup(
-	name="librapy",
+	name="py2so",
 	author="Shonte Amato-Grill",
 	author_email="shonte.amatogrill@gmail.com",
-	package_dirs={'': 'src'},
+	packages=find_packages(),
+	package_data={'':['template/*.json']},
 	entry_points = {
-		'console_scripts': ['librapy=src.__main__:main']
+		'console_scripts': [
+			'pyso = src.__main__:main',
+		],
 	}
 )

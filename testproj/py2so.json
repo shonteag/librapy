@@ -1,8 +1,6 @@
 {
-    "build_dir": "build", 
-    "compiled_dir": "compiled", 
     "files": {
-        "goodbye_world.py": "a049bce812f4dc2e4263106ad3563e7b", 
+        "goodbye_world.py": "b3c81137da4c704d56d5872e252a33f1", 
         "hello_world.py": "a9b15e1b1df5564307f6e32683eeffc4", 
         "sub/thingy.py": "3345e63fed9a60315590f4c6c2fc9098"
     }, 
