@@ -11,5 +11,8 @@ librapy projects.
 import os
 import sys
 import subprocess
+import hashlib
 
 import manifest
+
+

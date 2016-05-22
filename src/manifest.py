@@ -28,6 +28,12 @@ def _make_project_path(path, project_path):
 	base = os.path.abspath(project_path)
 	return os.path.join(base, path)
 
+def _make_key_path(path, project_path):
+	"""
+	Shorten project path to relative path.
+	"""
+	return path.replace(project_path + os.sep, "")
+
 def _parse_project_path(project_path):
 	"""
 	Parse the project_path.
@@ -81,6 +87,24 @@ def _add_file(manifest, path, project_path):
 	except IOError:
 		raise IOError("file {0} does not exist".format(path))
 	return manifest
+
+def _update_file(manifest, path, project_path):
+	"""
+	update a files md5 checksum
+	"""
+	path = _make_key_path(path, project_path)
+	if path not in manifest["files"]:
+		raise KeyError("file {0} not in manifest".format(path))
+		return manifest
+
+	try:
+		h = hashlib.md5()
+		h.update(open(_make_project_path(path, project_path)).read())
+		manifest["files"][path] = h.hexdigest()
+	except IOError:
+		raise IOError("file {0} does not exist".format(path))
+	return manifest
+
 
 def _remove_file(manifest, path, project_path):
 	"""
@@ -165,6 +189,17 @@ def remove_file(path, project_path=None):
 	_write_manifest(manifest, project_path)
 
 
+def update_file(path, project_path=None):
+	"""
+	Cmd entry to update a file md5 checksum.
+	"""
+
+	project_path = _parse_project_path(project_path)
+	manifest = _get_manifest(project_path)
+	manifest = _update_file(manifest, path, project_path)
+	_write_manifest(manifest, project_path)
+
+
 def get_files(project_path=None):
 	"""
 	Cmd entry to retrieve dict of files and
@@ -176,23 +211,29 @@ def get_files(project_path=None):
 	return _get_files(manifest, project_path)
 
 
-def get_build_dir(project_path=None):
+def get_build_dir(project_path=None, full_path=False):
 	"""
 	Get the project's specified build directory.
 	"""
 
 	project_path = _parse_project_path(project_path)
 	manifest = _get_manifest(project_path)
-	return manifest["build_dir"]
+	ret = manifest["build_dir"]
+	if full_path:
+		ret = _make_project_path(ret, project_path)
+	return ret
 
-def get_compiled_dir(project_path=None):
+def get_compiled_dir(project_path=None, full_path=False):
 	"""
 	Get the project's specified compiled directory.
 	"""
 
 	project_path = _parse_project_path(project_path)
 	manifest = _get_manifest(project_path)
-	return manifest["compiled_dir"]
+	ret = manifest["compiled_dir"]
+	if full_path:
+		ret = _make_project_path(ret, project_path)
+	return ret
 
 def set_key(key, value, project_path=None):
 	"""

@@ -1,8 +1,10 @@
 {
-    "build_dir": "builddirectory", 
+    "build_dir": "build", 
     "compiled_dir": "compiled", 
     "files": {
-        "hello_world.py": "a9b15e1b1df5564307f6e32683eeffc4"
+        "goodbye_world.py": "a049bce812f4dc2e4263106ad3563e7b", 
+        "hello_world.py": "a9b15e1b1df5564307f6e32683eeffc4", 
+        "sub/thingy.py": "3345e63fed9a60315590f4c6c2fc9098"
     }, 
     "unittest": "nosetests"
 }
