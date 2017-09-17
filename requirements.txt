@@ -1,4 +1,0 @@
-Cython==0.24
-MarkupSafe==0.23
-argparse==1.2.1
-wsgiref==0.1.2

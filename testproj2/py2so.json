@@ -1,6 +1,0 @@
-{
-    "files": {
-        "src/main.py": "7c13ab197794a4669d46b2aed40a299a"
-    }, 
-    "unittest": "nosetests"
-}
