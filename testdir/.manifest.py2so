@@ -1,0 +1,31 @@
+{
+    "profiles": {
+        "dll": {
+            "portext": "c", 
+            "compiledir": "compile/windows", 
+            "compilecmd": "cl /LD /IC:/python/include/python27 {portpath} /F{compilepath}", 
+            "compileext": "dll", 
+            "portdir": "build/windows", 
+            "portcmd": "cython {file} -o {portpath}"
+        }, 
+        "linux": {
+            "portext": "c", 
+            "compiledir": "compile/linux", 
+            "compilecmd": "gcc -shared -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing -I/usr/include/python2.7 -o {compilepath} {portpath}", 
+            "compileext": "so", 
+            "portdir": "build/linux", 
+            "portcmd": "cython {file} -o {portpath}"
+        }
+    }, 
+    "manifest": {
+        "inner1/lower3.py": [
+            "68b329da9893e34099c7d8ad5cb9c940"
+        ], 
+        "inner1/lower2.py": [
+            "68b329da9893e34099c7d8ad5cb9c940"
+        ], 
+        "inner1/lower.py": [
+            "68b329da9893e34099c7d8ad5cb9c940"
+        ]
+    }
+}
